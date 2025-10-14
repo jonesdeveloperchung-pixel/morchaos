@@ -1,0 +1,65 @@
+[tool.poetry]
+name = "morchaos"
+version = "0.1.0"
+description = "A collection of utilities for file management, deduplication, and system monitoring"
+authors = ["Jones Chung <jones.developer.chung@gmail.com>"]
+readme = "README.md"
+packages = [{include = "morchaos"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+click = "^8.1.0"
+imagehash = "^4.3.0"
+Pillow = "^10.0.0"
+pdfplumber = "^0.9.0"
+psutil = "^5.9.0"
+requests = "^2.31.0"
+python-docx = "^0.8.11"
+ebooklib = "^0.18"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
+pytest-cov = "^4.1.0"
+pytest-mock = "^3.11.0"
+flake8 = "^6.0.0"
+mypy = "^1.5.0"
+pydocstyle = "^6.3.0"
+black = "^23.7.0"
+types-psutil = "^5.9.0"
+types-requests = "^2.31.0"
+
+[tool.poetry.scripts]
+duplicate = "morchaos.cli.duplicate:main"
+image-diff = "morchaos.cli.image_diff:main"
+source-diff = "morchaos.cli.source_diff:main"
+ebook-catalog = "morchaos.cli.ebook_catalog:main"
+chatbot = "morchaos.cli.chatbot:main"
+system-info = "morchaos.cli.system_info:main"
+archive-org = "morchaos.cli.archive_org:main"
+xkcd = "morchaos.cli.xkcd:main"
+youtube = "morchaos.cli.youtube:main"
+duplicate = "morchaos.cli.duplicate:main"
+email-bot = "morchaos.cli.email_bot:main"
+geocode = "morchaos.cli.geocode:main"
+
+[project.urls]
+Homepage = "https://github.com/pyutils/pyutils"
+Repository = "https://github.com/pyutils/pyutils.git"
+Issues = "https://github.com/pyutils/pyutils/issues"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "W503"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
