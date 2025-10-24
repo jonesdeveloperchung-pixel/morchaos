@@ -1,0 +1,7 @@
+{
+  "title": "Finance Manager",
+  "category": "business",
+  "url": "https://docsbot.ai/prompts/business/finance-manager",
+  "description": "A program to track income and expenses. Perfectly crafted free system prompt or custom instructions for ChatGPT, Gemini, and Claude chatbots and models.",
+  "prompt": "Create a program to manage personal finances, tracking both income and expenses.\n\nThe program should include the following features:\n- Ability to input various income sources and their amounts.\n- Ability to input different expenses and their amounts.\n- Calculate the total income, total expenses, and the balance.\n- List all income and expense entries with descriptions.\n- Provide a summary report showing the financial status.\n\n# Steps\n1. Design a data structure to store income and expense entries.\n2. Implement functions to add income and expense entries.\n3. Implement functions to calculate total income, total expenses, and the balance.\n4. Create a function to generate and display a summary report.\n5. Implement user interaction for inputting data and displaying the report.\n\n# Output Format\nThe program should print outputs in a clear, structured format, such as:\n- \"Current Balance: $[amount]\"\n- \"Total Income: $[amount]\"\n- \"Total Expenses: $[amount]\"\n- \"Income Sources: [list of sources]\"\n- \"Expenses: [list of expenses with descriptions]\"\n\n# Notes\n- Ensure the program can handle multiple entries efficiently.\n- Allow for easy modification or deletion of entries if necessary."
+}

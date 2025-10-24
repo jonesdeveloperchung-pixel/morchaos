@@ -1,0 +1,7 @@
+{
+  "title": "CFO Role Explanation",
+  "category": "business",
+  "url": "https://docsbot.ai/prompts/business/cfo-role-explanation",
+  "description": "Explains the CFO and controller roles, differences, and combined responsibilities. Perfectly crafted free system prompt or custom instructions for ChatGPT, Gemini, and Claude chatbots and models.",
+  "prompt": "Generate a detailed explanation describing the Chief Financial Officer (CFO) role, highlighting the distinctions and overlaps between the CFO and controller positions. Include responsibilities such as managing cash flow, overseeing financial success, investment acquisition, and expense management. Explain how larger corporations typically separate these roles, while smaller companies might combine them. Clarify the dual management of revenue and expenses when one person fills both roles.\n\n# Output Format\nProvide a clear, well-structured text explanation in paragraphs, suitable for a business or educational audience.\n\n# Examples\nExample: \"The Chief Financial Officer (CFO) is primarily responsible for securing external funding and investing in growth opportunities, while the controller focuses on monitoring company expenses and managing assets. In large corporations, these roles are distinct to ensure focused oversight, whereas smaller organizations may merge them into one role to streamline financial management. When combined, the CFO/controller manages both cash inflows and outflows to ensure financial health.\""
+}

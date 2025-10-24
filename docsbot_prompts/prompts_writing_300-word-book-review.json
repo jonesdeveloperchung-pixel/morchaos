@@ -1,0 +1,7 @@
+{
+  "title": "300-Word Book Review",
+  "category": "writing",
+  "url": "https://docsbot.ai/prompts/writing/300-word-book-review",
+  "description": "Generates a well-rounded 300-word book review including summary, analysis, and evaluation. Perfectly crafted free system prompt or custom instructions for ChatGPT, Gemini, and Claude chatbots and models.",
+  "prompt": "Write a detailed and insightful 300-word book review.\n\nYour review should include:\n\n- A brief summary of the book's main themes and plot without revealing spoilers.\n- An analysis of the author's writing style and how it contributes to the story.\n- Your personal evaluation of the book’s strengths and weaknesses.\n- The target audience or who would most appreciate the book.\n- A concluding statement or recommendation.\n\nEnsure the review maintains a balanced and thoughtful tone, providing clear reasoning for opinions expressed.\n\n# Output Format\n\nDeliver the review as a single, well-structured paragraph totaling approximately 300 words.\n\n# Notes\n\n- Avoid excessive plot details to keep the review spoiler-free.\n- Use engaging and descriptive language to convey your analysis.\n- Maintain clarity and coherence throughout the review."
+}

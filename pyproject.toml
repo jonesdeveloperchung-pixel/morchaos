@@ -5,6 +5,11 @@ description = "A collection of utilities for file management, deduplication, and
 authors = ["Jones Chung <jones.developer.chung@gmail.com>"]
 readme = "README.md"
 packages = [{include = "morchaos"}]
+homepage = "https://github.com/jonesdeveloperchung-pixel/morchaos"
+repository = "https://github.com/jonesdeveloperchung-pixel/morchaos.git"
+
+[tool.poetry.urls]
+"Issues" = "https://github.com/jonesdeveloperchung-pixel/morchaos/issues"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -16,6 +21,10 @@ psutil = "^5.9.0"
 requests = "^2.31.0"
 python-docx = "^0.8.11"
 ebooklib = "^0.18"
+beautifulsoup4 = "^4.12.0"
+ollama = "*"
+httpx = "*"
+
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
@@ -33,19 +42,14 @@ duplicate = "morchaos.cli.duplicate:main"
 image-diff = "morchaos.cli.image_diff:main"
 source-diff = "morchaos.cli.source_diff:main"
 ebook-catalog = "morchaos.cli.ebook_catalog:main"
-chatbot = "morchaos.cli.chatbot:main"
+chatbot = "morchaos.cli.ollama_chat:main"
 system-info = "morchaos.cli.system_info:main"
 archive-org = "morchaos.cli.archive_org:main"
 xkcd = "morchaos.cli.xkcd:main"
 youtube = "morchaos.cli.youtube:main"
-duplicate = "morchaos.cli.duplicate:main"
 email-bot = "morchaos.cli.email_bot:main"
 geocode = "morchaos.cli.geocode:main"
-
-[project.urls]
-Homepage = "https://github.com/pyutils/pyutils"
-Repository = "https://github.com/pyutils/pyutils.git"
-Issues = "https://github.com/pyutils/pyutils/issues"
+prompt-manager = "morchaos.cli.prompt_manager:main"
 
 [build-system]
 requires = ["poetry-core"]

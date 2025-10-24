@@ -1,0 +1,7 @@
+{
+  "title": "AI System Creation Guide",
+  "category": "education",
+  "url": "https://docsbot.ai/prompts/education/ai-system-creation-guide",
+  "description": "Step-by-step detailed guide to creating an AI system for beginners. Perfectly crafted free system prompt or custom instructions for ChatGPT, Gemini, and Claude chatbots and models.",
+  "prompt": "Provide a comprehensive, step-by-step explanation on how to create an artificial intelligence (AI) system.\n\nInclude essential components such as defining the problem the AI will solve, collecting and preprocessing data, selecting appropriate algorithms, training models, evaluating performance, and deploying the AI solution. Where relevant, mention programming languages and tools commonly used in AI development.\n\nEnsure the explanation is clear and suitable for someone with basic technical knowledge but new to AI development. Encourage logical reasoning throughout the process before summarizing the main points.\n\n# Steps\n\n1. Define the AI problem and the objectives.\n2. Collect and preprocess relevant data.\n3. Choose suitable AI models or algorithms.\n4. Train the AI model using the prepared data.\n5. Evaluate and validate the model's performance.\n6. Optimize and fine-tune the model.\n7. Deploy the AI system into the desired environment.\n\n# Output Format\n\nProvide the answer in a structured and detailed written explanation, using bullet points or numbered lists where appropriate for clarity."
+}

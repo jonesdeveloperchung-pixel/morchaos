@@ -8,8 +8,37 @@ A collection of utilities for file management, deduplication, and system monitor
 - **Image Deduplication**: Detect similar images using perceptual hashing
 - **Source Code Deduplication**: Find duplicate source files with whitespace normalization
 - **Ebook Catalogization**: Organize ebooks by author using metadata extraction
-- **Chatbot Interface**: Simple HTTP client for local Ollama/chat model endpoints
+- **Ollama Chat Interface**: Interact with local Ollama models, supporting system/user prompts from strings or files, health checks, and model listing.
+- **Prompt Manager**: A CLI tool and API for managing system prompts, including format conversion, listing, mapping nicknames to prompt files, and downloading prompts from online sources.
 - **System Information**: Collect CPU, memory, disk, battery, and network statistics
+- **PDF AI Analysis**: Analyze and process PDF documents using AI.
+- **Empty Folder Cleaner**: Identify and remove empty directories.
+- **File Content Cleaner**: Perform various cleaning operations on file content (e.g., remove newlines).
+- **Folder Scanner**: Scan folders and output information about their contents.
+- **Subfolder Creator**: Create subfolders based on defined patterns or lists.
+- **CUDA/GPU Information**: Provide detailed information about CUDA and GPU availability and status.
+- **Temporary Folder Cleaner**: Clean up temporary files and folders.
+- **Directory Structure Creator**: Create complex directory structures from a declarative definition.
+- **Directory Tree Printer**: Visualize directory structures.
+- **JWT Encoder/Decoder**: Encode and decode JSON Web Tokens.
+- **Sentiment Analysis**: Perform sentiment analysis on text data.
+- **Simple TCP Server/Client**: Provide basic TCP client and server functionalities.
+- **Image Generation (Stable Diffusion)**: Integrate image generation capabilities using Stable Diffusion models.
+- **Stock Price Sentiment Analysis**: Analyze sentiment related to stock prices.
+- **PDF AI Analysis**: Analyze and process PDF documents using AI.
+- **Empty Folder Cleaner**: Identify and remove empty directories.
+- **File Content Cleaner**: Perform various cleaning operations on file content (e.g., remove newlines).
+- **Folder Scanner**: Scan folders and output information about their contents.
+- **Subfolder Creator**: Create subfolders based on defined patterns or lists.
+- **CUDA/GPU Information**: Provide detailed information about CUDA and GPU availability and status.
+- **Temporary Folder Cleaner**: Clean up temporary files and folders.
+- **Directory Structure Creator**: Create complex directory structures from a declarative definition.
+- **Directory Tree Printer**: Visualize directory structures.
+- **JWT Encoder/Decoder**: Encode and decode JSON Web Tokens.
+- **Sentiment Analysis**: Perform sentiment analysis on text data.
+- **Simple TCP Server/Client**: Provide basic TCP client and server functionalities.
+- **Image Generation (Stable Diffusion)**: Integrate image generation capabilities using Stable Diffusion models.
+- **Stock Price Sentiment Analysis**: Analyze sentiment related to stock prices.
 
 ## Installation
 
@@ -17,7 +46,7 @@ A collection of utilities for file management, deduplication, and system monitor
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/jonesdeveloperchung-pixel/morchaos.git
 cd morchaos
 
 # Install with Poetry
@@ -35,6 +64,7 @@ pip install .
 - pdfplumber, python-docx, ebooklib (ebook metadata)
 - psutil (system information)
 - requests (HTTP client)
+- ollama (Ollama API client)
 
 ## Usage
 
@@ -93,22 +123,61 @@ ebook-catalog --directory /path/to/ebooks --dry-run
 ebook-catalog --directory /path/to/ebooks
 ```
 
-#### Chatbot Interface
+#### Ollama Chat Interface
 ```bash
-# Single prompt
-chatbot "Hello, how are you?"
+# Single prompt with default system prompt
+chatbot -U "What is a closure in Python?"
 
-# Interactive mode
+# Single prompt with custom system prompt
+chatbot -S "You are a sarcastic Unix expert." -U "Explain virtual memory."
+
+# Single prompt with system prompt from file
+chatbot --sf system_prompt.file -U "What is a closure in Python?"
+
+# Single prompt with system prompt from JSON file
+chatbot --sf system_prompt.json -U "What is a closure in Python?"
+
+# Use a prompt nickname (after mapping with prompt-manager map to create prompt_file_map.json in the current directory)
+chatbot --sf my_awesome_prompt -U "Tell me more!"
+
+# Interactive chat mode
 chatbot --interactive
 
-# Use different model or endpoint
-chatbot --model codellama --url http://localhost:11434 "Write a Python function"
+# Use a different model
+chatbot -m llama2 --interactive
 
 # Check endpoint health
 chatbot --health-check
 
 # List available models
 chatbot --list-models
+```
+
+#### Prompt Manager
+```bash
+# Convert a text prompt to JSON format
+prompt-manager convert input.txt output.json
+
+# Convert a JSON prompt to text format
+prompt-manager convert input.json output.txt
+
+# List all prompt files in the current directory
+prompt-manager list
+
+# List all prompt files in a specific directory
+prompt-manager list /path/to/prompts
+
+# Map prompt files in the default folder to nicknames and save to prompt_file_map.json (default output file for chatbot)
+prompt-manager map
+
+# Map prompt files in a specific folder and save to a custom file
+prompt-manager map /path/to/my_prompts --output-file my_map.json
+
+# Download a prompt from DocsBot.ai and save it to the current directory
+prompt-manager download https://docsbot.ai/prompts/category/my-awesome-prompt
+
+# Download a prompt and save it to a specific output directory
+prompt-manager download https://docsbot.ai/prompts/category/my-awesome-prompt --output-dir my_downloads
 ```
 
 #### System Information
@@ -127,7 +196,9 @@ system-info --json
 ### Python API
 
 ```python
-from morchaos.core import duplicate, image, source, ebook, chatbot, system
+from morchaos.core import duplicate, image, source, ebook, ollama_chat, system, prompt_manager
+from morchaos.core.ollama_chat import run_chat, health_check, list_models # Import core functions directly
+from pathlib import Path
 
 # Find duplicate files
 duplicates = duplicate.find_duplicates(Path("/path/to/files"))
@@ -142,9 +213,26 @@ source_duplicates = source.find_source_duplicates(Path("/path/to/code"))
 # Catalogize ebooks
 ebook.catalogize(Path("/path/to/ebooks"))
 
-# Use chatbot
-bot = chatbot.Chatbot()
-response = bot.ask("Hello!")
+# Use ollama chat (example using the core functions directly)
+import asyncio
+async def chat_example():
+    messages = [{"role": "user", "content": "Hello!"}]
+    await run_chat(messages) # Use the run_chat function directly
+
+# asyncio.run(chat_example()) # This would run the example
+
+# Convert a prompt programmatically
+input_txt = Path("my_prompt.txt")
+input_txt.write_text("My system prompt content.")
+output_json = Path("my_prompt.json")
+prompt_manager.convert_prompt_format(input_txt, output_json)
+
+# List prompts programmatically
+all_prompts = prompt_manager.list_prompts(Path("."))
+
+# Map prompt files programmatically
+prompt_mappings = prompt_manager.map_prompt_files(Path("TODO/system_prompt_collection/docsbot_prompts"), Path("my_custom_map.json"))
+
 
 # Get system information
 cpu_info = system.get_cpu_info()
@@ -184,7 +272,8 @@ morchaos/
 │   ├── image.py          # Perceptual hash image comparison
 │   ├── source.py         # Source code normalization
 │   ├── ebook.py          # Ebook metadata extraction
-│   ├── chatbot.py        # HTTP client for chat models
+│   ├── ollama_chat.py    # Ollama chat integration
+│   ├── prompt_manager.py # Prompt management functions
 │   ├── system.py         # System information collection
 │   └── file_utils.py     # File utilities
 ├── cli/                  # Command-line interfaces
@@ -192,7 +281,8 @@ morchaos/
 │   ├── image_diff.py     # image-diff command
 │   ├── source_diff.py    # source-diff command
 │   ├── ebook_catalog.py  # ebook-catalog command
-│   ├── chatbot.py        # chatbot command
+│   ├── ollama_chat.py    # chatbot command
+│   ├── prompt_manager.py # prompt-manager command
 │   └── system_info.py    # system-info command
 ├── logger/               # Logging configuration
 └── tests/                # Test suite
