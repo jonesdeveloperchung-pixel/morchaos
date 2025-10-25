@@ -3,7 +3,7 @@
 import imaplib
 import email
 from email.header import decode_header
-from typing import List, Dict, Any, Optional, Tuple
+from typing import List, Dict, Any, Optional
 
 from ..core.logging import get_logger
 
@@ -50,7 +50,7 @@ class IMAPClient:
             try:
                 self.connection.close()
                 self.connection.logout()
-            except:
+            except Exception:
                 pass
             self.connection = None
 

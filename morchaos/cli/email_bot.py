@@ -1,7 +1,6 @@
 """CLI for email bot."""
 
 import argparse
-import json
 
 from ..email.bot import TorrentBot, EmailBot
 from ..core.logging import get_logger, set_log_level

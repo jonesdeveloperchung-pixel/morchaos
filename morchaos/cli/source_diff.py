@@ -71,7 +71,7 @@ def main(directory: Path, extensions: tuple[str, ...], verbose: bool) -> None:
                     click.echo(f"  {path}")
 
         # Summary
-        click.echo(f"\nSummary:")
+        click.echo("\nSummary:")
         click.echo(f"  Total groups: {total_groups}")
         click.echo(f"  Total duplicate files: {total_files}")
         click.echo(f"  Extensions scanned: {', '.join(extensions)}")

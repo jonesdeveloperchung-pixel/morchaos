@@ -3,13 +3,14 @@ import asyncio
 import json
 import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Dict
 
 from morchaos.core.ollama_chat import run_chat, health_check, list_models
 from morchaos.core.prompt_manager import read_prompt
 from morchaos.logger import init_logging, logger
 
 PROMPT_MAP_FILE = Path("prompt_file_map.json")
+
 
 def _load_prompt_map() -> Dict[str, str]:
     """Loads the prompt nickname to full filename mapping."""
@@ -19,6 +20,7 @@ def _load_prompt_map() -> Dict[str, str]:
             return {item["nickname"]: item["full_path"] for item in mapping_list}
     return {}
 
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Send a system + user prompt to an Ollama model."
@@ -26,17 +28,20 @@ def build_parser() -> argparse.ArgumentParser:
 
     # System prompt options (mutually exclusive)
     sys_group = parser.add_mutually_exclusive_group()
-    sys_group.add_argument("-s", "--system", dest="system_prompt", help="System prompt as a string.")
+    sys_group.add_argument("-s", "--system", dest="system_prompt",
+                           help="System prompt as a string.")
     sys_group.add_argument(
         "-sf",
         "--system-file",
         dest="system_file",
-        help="File containing the system prompt (plain text or JSON) or a nickname from prompt_file_map.json.",
+        help="File containing the system prompt (plain text or JSON) "
+             "or a nickname from prompt_file_map.json.",
     )
 
     # User prompt options (mutually exclusive)
     user_group = parser.add_mutually_exclusive_group()
-    user_group.add_argument("-p", "--prompt", dest="user_prompt", help="User prompt as a string.")
+    user_group.add_argument("-p", "--prompt", dest="user_prompt",
+                            help="User prompt as a string.")
     user_group.add_argument(
         "-uf",
         "--user-file",
@@ -48,7 +53,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "-d", "--debug", action="store_true", help="Print stack traces on errors."
     )
-    
+
     # Interactive mode
     parser.add_argument(
         "-i", "--interactive",
@@ -79,7 +84,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="List available models and exit.",
     )
     parser.add_argument(
-        "-H", 
+        "-H",
         "--health-check",
         action="store_true",
         help="Check if the endpoint is healthy and exit.",
@@ -87,12 +92,14 @@ def build_parser() -> argparse.ArgumentParser:
 
     return parser
 
+
 def build_messages(system_prompt: str, user_prompt: str) -> list[dict[str, str]]:
     """Return the message list in the order required by Ollama."""
     return [
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": user_prompt},
     ]
+
 
 def main():
     parser = build_parser()
@@ -211,6 +218,7 @@ def main():
             else:
                 logger.error(f"Ollama chat failed: {e}")
             sys.exit(1)
+
 
 if __name__ == "__main__":
     main()

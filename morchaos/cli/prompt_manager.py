@@ -1,12 +1,10 @@
 import argparse
 import sys
 from pathlib import Path
-from typing import List
 
 from morchaos.core.prompt_manager import (
     convert_prompt_format,
     list_prompts,
-    read_prompt,
     map_prompt_files,
     download_prompt_from_docsbot,
 )
@@ -52,7 +50,7 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         default=Path("docsbot_prompts"),
         nargs="?",
-        help="Folder to scan for prompt files (default: TODO/system_prompt_collection/docsbot_prompts).",
+        help="Folder to scan for prompt files (default: docsbot_prompts).",
     )
     map_parser.add_argument(
         "--output-file",

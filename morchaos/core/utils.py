@@ -1,7 +1,6 @@
 """Common utility functions."""
 
 import hashlib
-import os
 from pathlib import Path
 from typing import Union
 

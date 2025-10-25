@@ -1,11 +1,7 @@
 import pytest
-from unittest.mock import AsyncMock, patch
-import sys
-import argparse
-from pathlib import Path
+from unittest.mock import AsyncMock
 
 from morchaos.cli import ollama_chat
-from morchaos.core.ollama_chat import run_chat, health_check, list_models
 
 
 @pytest.fixture

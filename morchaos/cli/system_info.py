@@ -1,6 +1,5 @@
 """CLI for system information collection."""
 
-import json
 import sys
 from typing import Dict, Any
 
@@ -51,16 +50,14 @@ def _print_memory_info(memory_info: Dict[str, Any]) -> None:
     click.echo("\nMemory Information:")
     click.echo(f"  Total: {_format_bytes(memory_info['total'])}")
     click.echo(f"  Available: {_format_bytes(memory_info['available'])}")
-    click.echo(
-        f"  Used: {_format_bytes(memory_info['used'])} ({memory_info['percent']:.1f}%)"
-    )
+    used_str = f"({memory_info['percent']:.1f}%)"
+    click.echo(f"  Used: {_format_bytes(memory_info['used'])} {used_str}")
     click.echo(f"  Free: {_format_bytes(memory_info['free'])}")
 
     if memory_info["swap_total"] > 0:
         click.echo(f"  Swap total: {_format_bytes(memory_info['swap_total'])}")
-        click.echo(
-            f"  Swap used: {_format_bytes(memory_info['swap_used'])} ({memory_info['swap_percent']:.1f}%)"
-        )
+        swap_used_str = f"({memory_info['swap_percent']:.1f}%)"
+        click.echo(f"  Swap used: {_format_bytes(memory_info['swap_used'])} {swap_used_str}")
 
 
 def _print_disk_info(disk_info: Dict[str, Any]) -> None:

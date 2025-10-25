@@ -1,7 +1,6 @@
 """CLI for Archive.org downloader."""
 
 import argparse
-from pathlib import Path
 
 from ..downloader.archive_org import download_games
 from ..core.logging import get_logger, set_log_level

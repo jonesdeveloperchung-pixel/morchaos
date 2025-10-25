@@ -1,8 +1,6 @@
 import pytest
 from pathlib import Path
 import json
-import sys
-from unittest.mock import patch
 
 from morchaos.core import prompt_manager
 from morchaos.cli import prompt_manager as cli_prompt_manager

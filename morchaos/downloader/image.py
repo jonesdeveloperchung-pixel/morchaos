@@ -1,8 +1,7 @@
 """Image downloader and scraper."""
 
-import re
 from pathlib import Path
-from typing import List, Union, Optional
+from typing import List, Union
 from urllib.parse import urljoin, urlparse
 
 from .web import get_page, download_file, parse_html

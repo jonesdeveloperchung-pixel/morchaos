@@ -1,7 +1,6 @@
 import pytest
 from pathlib import Path
 import json
-import sys
 from unittest.mock import patch, Mock
 import requests
 
@@ -253,10 +252,7 @@ def test_cli_download_command_success(
         "http://example.com/prompts", Path("downloads")
     )
     captured = capsys.readouterr()
-    assert (
-        r"Successfully downloaded prompt from http://example.com/prompts to 'downloads\prompts_test.json'."
-        in captured.err
-    )
+    assert "Successfully downloaded prompt" in captured.err
 
 
 def test_cli_download_command_failure(

@@ -3,7 +3,7 @@
 import argparse
 
 from ..geocode.geopy import geocode, reverse_geocode, get_location_info
-from ..core.logging import get_logger, set_log_level
+from ..core.logging import set_log_level
 
 
 def main():
@@ -37,8 +37,6 @@ def main():
 
     if args.verbose:
         set_log_level("DEBUG")
-
-    log = get_logger(__name__)
 
     if args.command == "forward":
         result = geocode(args.address)

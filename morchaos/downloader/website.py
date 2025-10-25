@@ -1,8 +1,8 @@
 """Generic website crawler and link extractor."""
 
 from pathlib import Path
-from typing import List, Set, Union, Optional
-from urllib.parse import urljoin, urlparse, urlunparse
+from typing import List, Set, Union
+from urllib.parse import urljoin, urlparse
 
 from .web import get_page, download_file, parse_html
 from ..core.logging import get_logger

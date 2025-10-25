@@ -1,8 +1,7 @@
-import asyncio
 import ollama
 from ollama import AsyncClient
 import logging
-from typing import List, Dict, Any
+from typing import List, Dict
 
 logger = logging.getLogger(__name__)
 

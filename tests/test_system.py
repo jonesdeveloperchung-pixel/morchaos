@@ -1,6 +1,5 @@
 """Tests for system information module."""
 
-import pytest
 from unittest.mock import Mock, patch
 from morchaos.core.system import (
     get_cpu_info,

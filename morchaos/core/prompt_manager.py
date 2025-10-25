@@ -22,7 +22,7 @@ def map_prompt_files(
     folder_path: Path, output_path: Path | None = None
 ) -> List[Dict[str, str]]:
     """
-    Scans the folder for .json files starting with 'prompts_' and maps them to nickname/full_path pairs.
+    Scans for .json files starting with 'prompts_' and maps them.
     If output_path is provided, saves the mapping to a JSON file.
     """
     if not folder_path.is_dir():
@@ -131,7 +131,7 @@ def convert_prompt_format(input_path: Path, output_path: Path):
         output_path.write_text(content, encoding="utf-8")
     else:
         raise ValueError(
-            f"Unsupported input file format: {input_path.suffix}. Only .txt and .json are supported."
+            f"Unsupported format: {input_path.suffix}. Only .txt and .json are supported."
         )
 
 

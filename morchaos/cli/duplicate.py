@@ -102,7 +102,7 @@ def main(
                 click.echo("Operation cancelled.")
                 return
 
-            processed = act_on_duplicates(duplicate_groups, action, target_path)  # type: ignore[arg-type]
+            processed = act_on_duplicates(duplicate_groups, action, target_path)
             click.echo(f"\n{action.capitalize()}d {processed} duplicate files.")
 
     except (ValueError, FileNotFoundError) as e:

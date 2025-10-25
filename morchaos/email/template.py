@@ -1,7 +1,6 @@
 """Email template utilities."""
 
 from string import Template
-from typing import Dict, Any, Optional
 from pathlib import Path
 
 

@@ -3,14 +3,13 @@ import logging
 import re
 import shutil
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict
 
 # Import third‑party libraries used for the various ebook formats.
 # A clear error message is raised if any are missing.
 try:
     import pdfplumber  # PDF extraction
     from docx import Document  # DOCX extraction
-    import ebooklib
     from ebooklib import epub  # EPUB extraction
 except ImportError as e:
     raise ImportError(

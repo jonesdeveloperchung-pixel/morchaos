@@ -1,9 +1,8 @@
 """YouTube video downloader using youtube-dl."""
 
 import subprocess
-import sys
 from pathlib import Path
-from typing import Union, Optional, List
+from typing import Union
 
 from ..core.logging import get_logger
 

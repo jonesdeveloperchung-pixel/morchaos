@@ -80,7 +80,7 @@ def main(
                     click.echo(f"  {path}")
 
         # Summary
-        click.echo(f"\nSummary:")
+        click.echo("\nSummary:")
         click.echo(f"  Total groups: {total_groups}")
         click.echo(f"  Total similar images: {total_files}")
         click.echo(f"  Similarity threshold: {threshold}")

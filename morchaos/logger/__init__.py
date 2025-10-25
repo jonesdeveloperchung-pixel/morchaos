@@ -1,7 +1,6 @@
 """Global logger configuration for morchaos package."""
 
 import logging
-from typing import Optional
 
 DEFAULT_FMT = "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
 

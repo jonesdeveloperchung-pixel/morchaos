@@ -6,7 +6,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 from pathlib import Path
-from typing import List, Union, Optional, Dict, Any
+from typing import List, Union, Optional
 
 from ..core.logging import get_logger
 
