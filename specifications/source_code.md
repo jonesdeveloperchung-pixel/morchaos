@@ -22,7 +22,7 @@ morchaos/
 │   ├── image.py
 │   ├── source.py
 │   ├── ebook.py
-│   ├── chatbot.py
+│   ├── ollama_chat.py
 │   └── system.py
 ├── cli/
 │   ├── __init__.py
@@ -30,7 +30,7 @@ morchaos/
 │   ├── image_diff.py
 │   ├── source_diff.py
 │   ├── ebook_catalog.py
-│   ├── chatbot.py
+│   ├── ollama_chat.py
 │   └── system_info.py
 └── pyproject.toml
 ```

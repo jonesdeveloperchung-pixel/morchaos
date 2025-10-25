@@ -53,14 +53,14 @@ It covers:
 | **core.image** | Perceptual hash & image duplicate detection | `core/image.py` | `phash_for_file(path: Path) -> str`<br>`find_image_duplicates(root: Path, extensions: Iterable[str]) -> Dict[str, List[Path]]` |
 | **core.source** | Whitespace‑insensitive source‑code hashing | `core/source.py` | `normalize_hash(path: Path) -> str`<br>`find_source_duplicates(root: Path, extensions: Iterable[str]) -> Dict[str, List[Path]]` |
 | **core.ebook** | Metadata extraction & catalogisation | `core/ebook.py` | `catalogize(root: Path, dry_run: bool = False) -> int` |
-| **core.chatbot** | HTTP client for local Ollama/Chat‑model | `core/chatbot.py` | `Chatbot.ask(prompt: str, stream: bool = False) -> str` |
+| **core.ollama_chat** | HTTP client for local Ollama/Chat‑model | `core/ollama_chat.py` | `run_chat(messages: List[Dict[str, str]], model: str, url: str, timeout: int)`<br>`health_check(url: str, timeout: int) -> bool`<br>`list_models(url: str, timeout: int) -> list[dict[str, any]]` |
 | **core.system** | System metrics | `core/system.py` | `get_cpu_info() -> Dict[str, Any]`<br>`get_memory_info() -> Dict[str, Any]`<br>`get_disk_info() -> Dict[str, Any]`<br>`get_battery_info() -> Dict[str, Any]`<br>`get_network_info() -> Dict[str, Any]` |
 | **logger.init_logging** | Global logger configuration | `logger/__init__.py` | `init_logging(level: int = logging.INFO, fmt: str = DEFAULT_FMT)` |
 | **cli.duplicate** | Console script `duplicate` | `cli/duplicate.py` | `main()` |
 | **cli.image_diff** | Console script `image-diff` | `cli/image_diff.py` | `main()` |
 | **cli.source_diff** | Console script `source-diff` | `cli/source_diff.py` | `main()` |
 | **cli.ebook_catalog** | Console script `ebook-catalog` | `cli/ebook_catalog.py` | `main()` |
-| **cli.chatbot** | Console script `chatbot` | `cli/chatbot.py` | `main()` |
+| **cli.ollama_chat** | Console script `chatbot` | `cli/ollama_chat.py` | `main()` |
 | **cli.system_info** | Console script `system-info` | `cli/system_info.py` | `main()` |
 
 > **Note** – All CLI modules use `click` for argument parsing, `logger` for output, and exit with `0` on success, `2` on user error, `1` on unexpected exception.
@@ -186,12 +186,18 @@ ebooklib = "^0.18"
 tqdm = "^4.66"
 
 [tool.poetry.scripts]
-duplicate = "cli.duplicate:main"
-image-diff = "cli.image_diff:main"
-source-diff = "cli.source_diff:main"
-ebook-catalog = "cli.ebook_catalog:main"
-chatbot = "cli.chatbot:main"
-system-info = "cli.system_info:main"
+duplicate = "morchaos.cli.duplicate:main"
+image-diff = "morchaos.cli.image_diff:main"
+source-diff = "morchaos.cli.source_diff:main"
+ebook-catalog = "morchaos.cli.ebook_catalog:main"
+chatbot = "morchaos.cli.ollama_chat:main"
+system-info = "morchaos.cli.system_info:main"
+archive-org = "morchaos.cli.archive_org:main"
+xkcd = "morchaos.cli.xkcd:main"
+youtube = "morchaos.cli.youtube:main"
+email-bot = "morchaos.cli.email_bot:main"
+geocode = "morchaos.cli.geocode:main"
+prompt-manager = "morchaos.cli.prompt_manager:main"
 
 [build-system]
 requires = ["poetry-core>=1.0"]

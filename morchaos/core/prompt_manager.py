@@ -8,15 +8,19 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 def extract_nickname(filename: str) -> str:
     """
     Extracts a nickname from a filename by removing the 'prompts_' prefix and '.json' suffix.
     """
     if filename.startswith("prompts_") and filename.endswith(".json"):
-        return filename[len("prompts_"):-len(".json")]
+        return filename[len("prompts_") : -len(".json")]
     return filename
 
-def map_prompt_files(folder_path: Path, output_path: Path | None = None) -> List[Dict[str, str]]:
+
+def map_prompt_files(
+    folder_path: Path, output_path: Path | None = None
+) -> List[Dict[str, str]]:
     """
     Scans the folder for .json files starting with 'prompts_' and maps them to nickname/full_path pairs.
     If output_path is provided, saves the mapping to a JSON file.
@@ -29,19 +33,28 @@ def map_prompt_files(folder_path: Path, output_path: Path | None = None) -> List
 
     prompt_mappings = []
     for file in absolute_folder_path.iterdir():
-        if file.is_file() and file.name.startswith("prompts_") and file.name.endswith(".json"):
+        if (
+            file.is_file()
+            and file.name.startswith("prompts_")
+            and file.name.endswith(".json")
+        ):
             nickname = extract_nickname(file.name)
             # Store the relative path from the current working directory
             relative_path = file.relative_to(Path.cwd())
-            prompt_mappings.append({
-                "nickname": nickname,
-                "full_path": str(relative_path) # Store as string for JSON serialization
-            })
-    
+            prompt_mappings.append(
+                {
+                    "nickname": nickname,
+                    "full_path": str(
+                        relative_path
+                    ),  # Store as string for JSON serialization
+                }
+            )
+
     if output_path:
         save_mapping_to_json(prompt_mappings, output_path)
 
     return prompt_mappings
+
 
 def save_mapping_to_json(mapping: List[Dict[str, str]], output_path: Path):
     """
@@ -50,8 +63,13 @@ def save_mapping_to_json(mapping: List[Dict[str, str]], output_path: Path):
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(mapping, f, indent=2, ensure_ascii=False)
 
-def read_prompt(source: str | None, file_path: str | None,
-                prompt_name: str, default: str | None = None) -> str:
+
+def read_prompt(
+    source: str | None,
+    file_path: str | None,
+    prompt_name: str,
+    default: str | None = None,
+) -> str:
     """
     Resolve a prompt either from a string or from a file.
 
@@ -67,16 +85,20 @@ def read_prompt(source: str | None, file_path: str | None,
     elif file_path is not None:
         path = Path(file_path)
         if not path.is_file():
-            raise ValueError(f"{prompt_name.capitalize()} file '{file_path}' not found.")
+            raise ValueError(
+                f"{prompt_name.capitalize()} file '{file_path}' not found."
+            )
         try:
-            if prompt_name == 'system' and path.suffix == '.json':
-                with open(path, 'r', encoding='utf-8') as f:
+            if prompt_name == "system" and path.suffix == ".json":
+                with open(path, "r", encoding="utf-8") as f:
                     data = json.load(f)
-                    prompt = data.get('prompt', '')
+                    prompt = data.get("prompt", "")
             else:
-                prompt = path.read_text(encoding='utf-8')
+                prompt = path.read_text(encoding="utf-8")
         except Exception as exc:
-            raise ValueError(f"Could not read {prompt_name} file '{file_path}': {exc}") from exc
+            raise ValueError(
+                f"Could not read {prompt_name} file '{file_path}': {exc}"
+            ) from exc
     elif default is not None:
         prompt = default
     else:
@@ -85,6 +107,7 @@ def read_prompt(source: str | None, file_path: str | None,
     if not prompt.strip():
         raise ValueError(f"{prompt_name.capitalize()} prompt is empty.")
     return prompt
+
 
 def convert_prompt_format(input_path: Path, output_path: Path):
     """
@@ -95,19 +118,22 @@ def convert_prompt_format(input_path: Path, output_path: Path):
     if not input_path.is_file():
         raise FileNotFoundError(f"Input file not found: {input_path}")
 
-    if input_path.suffix == '.txt':
-        content = input_path.read_text(encoding='utf-8')
-        output_path = output_path.with_suffix('.json')
+    if input_path.suffix == ".txt":
+        content = input_path.read_text(encoding="utf-8")
+        output_path = output_path.with_suffix(".json")
         json_content = {"prompt": content}
-        output_path.write_text(json.dumps(json_content, indent=2), encoding='utf-8')
-    elif input_path.suffix == '.json':
-        with open(input_path, 'r', encoding='utf-8') as f:
+        output_path.write_text(json.dumps(json_content, indent=2), encoding="utf-8")
+    elif input_path.suffix == ".json":
+        with open(input_path, "r", encoding="utf-8") as f:
             data = json.load(f)
-            content = data.get('prompt', '')
-        output_path = output_path.with_suffix('.txt')
-        output_path.write_text(content, encoding='utf-8')
+            content = data.get("prompt", "")
+        output_path = output_path.with_suffix(".txt")
+        output_path.write_text(content, encoding="utf-8")
     else:
-        raise ValueError(f"Unsupported input file format: {input_path.suffix}. Only .txt and .json are supported.")
+        raise ValueError(
+            f"Unsupported input file format: {input_path.suffix}. Only .txt and .json are supported."
+        )
+
 
 def list_prompts(directory: Path) -> List[Path]:
     """
@@ -118,20 +144,22 @@ def list_prompts(directory: Path) -> List[Path]:
 
     prompts = []
     for item in directory.iterdir():
-        if item.is_file() and item.suffix in ['.txt', '.json']:
+        if item.is_file() and item.suffix in [".txt", ".json"]:
             prompts.append(item)
     return prompts
+
 
 def slug_from_url(url: str) -> str:
     """Generate a slug from the URL (i.e., valid filename)"""
     parsed = urlparse(url)
     return parsed.path.strip("/").replace("/", "_")
 
+
 def extract_prompt_data(url: str) -> Dict[str, Any] | None:
     """Extract the title, description, and prompt from the page"""
     try:
         response = requests.get(url)
-        response.raise_for_status() # Raise an exception for HTTP errors
+        response.raise_for_status()  # Raise an exception for HTTP errors
     except requests.exceptions.RequestException as e:
         logger.error(f"Failed to fetch {url}: {e}")
         return None
@@ -143,12 +171,18 @@ def extract_prompt_data(url: str) -> Dict[str, Any] | None:
     title = title_tag.text.strip() if title_tag else "Untitled"
 
     # Extract description (assuming it is in a 'p' tag or other recognizable container)
-    description_tag = soup.find("p", class_="mx-auto mt-6 max-w-xl text-xl leading-8 text-gray-300")
-    description = description_tag.text.strip() if description_tag else "No description available"
+    description_tag = soup.find(
+        "p", class_="mx-auto mt-6 max-w-xl text-xl leading-8 text-gray-300"
+    )
+    description = (
+        description_tag.text.strip() if description_tag else "No description available"
+    )
 
     # Extract prompt content (heuristic: using pre tag for prompt content)
     prompt_section = soup.find("pre", class_="whitespace-pre-wrap overflow-auto")
-    prompt_text = prompt_section.text.strip() if prompt_section else "No prompt content available"
+    prompt_text = (
+        prompt_section.text.strip() if prompt_section else "No prompt content available"
+    )
 
     # Extract category from URL (based on folder in the URL path)
     path_parts = urlparse(url).path.strip("/").split("/")
@@ -159,8 +193,9 @@ def extract_prompt_data(url: str) -> Dict[str, Any] | None:
         "category": category,
         "url": url,
         "description": description,
-        "prompt": prompt_text
+        "prompt": prompt_text,
     }
+
 
 def download_prompt_from_docsbot(url: str, output_dir: Path) -> Path | None:
     """

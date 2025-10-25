@@ -24,7 +24,7 @@
 | **FR‑03** | **Image deduplication** – compute perceptual hash and find duplicates. | • `image.phash_for_file(path)` returns a 64‑bit hash string. <br>• `find_image_duplicates` returns a mapping similar to `duplicate.find_duplicates`. |
 | **FR‑04** | **Source‑code deduplication** – whitespace‑insensitive comparison. | • `source.normalize_hash(path)` returns a deterministic hash. <br>• `find_source_duplicates` returns a mapping of identical source files. |
 | **FR‑05** | **Ebook catalogisation** – extract author metadata and move files. | • `ebook.catalogize(root)` moves each ebook into `<root>/<author>/` preserving original filename. <br>• Supports PDF, EPUB, MOBI, DOCX. |
-| **FR‑06** | **Chatbot wrapper** – simple HTTP client for local Ollama/Chat‑model endpoints. | • `Chatbot.ask(prompt)` returns a string response. <br>• Handles streaming and non‑streaming responses. |
+| **FR‑06** | **Chatbot wrapper** – simple HTTP client for local Ollama/Chat‑model endpoints. | • `run_chat(messages, ...)` returns a string response. <br>• Handles streaming responses. |
 | **FR‑07** | **System info collector** – expose CPU, memory, disk, battery, network data. | • `system.get_cpu_info()` returns a dict with keys `cores`, `freq`, `usage`. <br>• All getters return a dict of primitives. |
 | **FR‑08** | **CLI wrappers** – thin `argparse`/`click` scripts that call core functions. | • Each CLI prints a helpful `--help` message. <br>• CLI exits with status 0 on success, non‑zero on error. |
 | **FR‑09** | **Logging** – global logger configured once. | • `logger.init_logging()` sets a console handler with level `INFO`. <br>• All modules use `logging.getLogger(__name__)`. |
@@ -85,7 +85,7 @@
    * Running `duplicate --directory ./data` lists duplicate groups.  
    * Running `image-diff --directory ./images` lists image duplicates.  
    * Running `ebook-catalog --directory ./ebooks` moves files into `<root>/<author>/`.  
-   * `Chatbot.ask("Hello")` returns a non‑empty string.
+   * `run_chat(...)` returns a non‑empty string.
 
 3. **Logging & Error Handling**  
    * All modules log at `INFO` level.  
@@ -128,8 +128,8 @@ tests/
 ├─ test_ebook.py
 │   ├─ test_catalogize()
 │   └─ test_author_extraction()
-├─ test_chat.py
-│   └─ test_chatbot_ask()
+├─ test_ollama_chat.py
+│   └─ test_run_chat()
 ├─ test_system.py
 │   └─ test_get_cpu_info()
 └─ conftest.py   # fixtures for temp dirs, mock responses
@@ -152,7 +152,7 @@ Each test file should:
 | **Duplicate** | Files with identical content (hash). |
 | **Perceptual Hash** | Image similarity metric (`imagehash`). |
 | **Author Extraction** | Metadata extraction from ebook formats. |
-| **Chatbot** | HTTP client for local language‑model endpoints. |
+| **Chatbot** | HTTP client for local language‑model endpoints, via the `ollama_chat` module. |
 | **Entry Point** | Console script defined in `pyproject.toml`. |
 
 ---

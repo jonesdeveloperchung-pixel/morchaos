@@ -126,31 +126,31 @@ ebook-catalog --directory /path/to/ebooks
 #### Ollama Chat Interface
 ```bash
 # Single prompt with default system prompt
-chatbot -U "What is a closure in Python?"
+chatbot -p "What is a closure in Python?"
 
 # Single prompt with custom system prompt
-chatbot -S "You are a sarcastic Unix expert." -U "Explain virtual memory."
+chatbot -s "You are a sarcastic Unix expert." -p "Explain virtual memory."
 
 # Single prompt with system prompt from file
-chatbot --sf system_prompt.file -U "What is a closure in Python?"
+chatbot -sf system_prompt.file -p "What is a closure in Python?"
 
 # Single prompt with system prompt from JSON file
-chatbot --sf system_prompt.json -U "What is a closure in Python?"
+chatbot -sf system_prompt.json -p "What is a closure in Python?"
 
 # Use a prompt nickname (after mapping with prompt-manager map to create prompt_file_map.json in the current directory)
-chatbot --sf my_awesome_prompt -U "Tell me more!"
+chatbot -sf my_awesome_prompt -p "Tell me more!"
 
 # Interactive chat mode
-chatbot --interactive
+chatbot -i
 
 # Use a different model
-chatbot -m llama2 --interactive
+chatbot -m llama2 -i
 
 # Check endpoint health
-chatbot --health-check
+chatbot -H
 
 # List available models
-chatbot --list-models
+chatbot -l
 ```
 
 #### Prompt Manager
