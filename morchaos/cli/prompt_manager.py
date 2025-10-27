@@ -16,11 +16,13 @@ def build_parser() -> argparse.ArgumentParser:
         description="Manage system prompts for Ollama chat."
     )
 
-    subparsers = parser.add_subparsers(dest="command", help="Available commands")
+    subparsers = parser.add_subparsers(dest="command",
+                                        help="Available commands")
 
     # Convert command
     convert_parser = subparsers.add_parser(
-        "convert", help="Convert prompt format (txt to json, or json to txt)."
+        "convert",
+        help="Convert prompt format (txt to json, or json to txt)."
     )
     convert_parser.add_argument(
         "input_file", type=Path, help="Path to the input prompt file."
@@ -61,7 +63,8 @@ def build_parser() -> argparse.ArgumentParser:
 
     # Download command
     download_parser = subparsers.add_parser(
-        "download", help="Download prompts from a source (e.g., docsbot.ai)."
+        "download",
+        help="Download prompts from a source (e.g., docsbot.ai)."
     )
     download_parser.add_argument(
         "source_url", type=str, help="URL to download prompts from."

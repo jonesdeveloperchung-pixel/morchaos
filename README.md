@@ -11,20 +11,7 @@ A collection of utilities for file management, deduplication, and system monitor
 - **Ollama Chat Interface**: Interact with local Ollama models, supporting system/user prompts from strings or files, health checks, and model listing.
 - **Prompt Manager**: A CLI tool and API for managing system prompts, including format conversion, listing, mapping nicknames to prompt files, and downloading prompts from online sources.
 - **System Information**: Collect CPU, memory, disk, battery, and network statistics
-- **PDF AI Analysis**: Analyze and process PDF documents using AI.
-- **Empty Folder Cleaner**: Identify and remove empty directories.
-- **File Content Cleaner**: Perform various cleaning operations on file content (e.g., remove newlines).
-- **Folder Scanner**: Scan folders and output information about their contents.
-- **Subfolder Creator**: Create subfolders based on defined patterns or lists.
-- **CUDA/GPU Information**: Provide detailed information about CUDA and GPU availability and status.
-- **Temporary Folder Cleaner**: Clean up temporary files and folders.
-- **Directory Structure Creator**: Create complex directory structures from a declarative definition.
-- **Directory Tree Printer**: Visualize directory structures.
-- **JWT Encoder/Decoder**: Encode and decode JSON Web Tokens.
-- **Sentiment Analysis**: Perform sentiment analysis on text data.
-- **Simple TCP Server/Client**: Provide basic TCP client and server functionalities.
-- **Image Generation (Stable Diffusion)**: Integrate image generation capabilities using Stable Diffusion models.
-- **Stock Price Sentiment Analysis**: Analyze sentiment related to stock prices.
+- **ASCII Art Generation**: A comprehensive toolkit for creating and displaying ASCII art from various sources, including text, images, and videos.
 - **PDF AI Analysis**: Analyze and process PDF documents using AI.
 - **Empty Folder Cleaner**: Identify and remove empty directories.
 - **File Content Cleaner**: Perform various cleaning operations on file content (e.g., remove newlines).
@@ -65,6 +52,9 @@ pip install .
 - psutil (system information)
 - requests (HTTP client)
 - ollama (Ollama API client)
+- pyfiglet (ASCII art from text)
+- opencv-python, numpy, pydub (ASCII art from video)
+- ffmpeg (for audio processing in ASCII art videos)
 
 ## Usage
 
@@ -193,10 +183,82 @@ system-info --category memory
 system-info --json
 ```
 
+#### ASCII Art Generation
+```bash
+# Generate ASCII art from text
+ascii-art text "Hello World" --font slant
+
+# List available fonts for text generation
+ascii-art text --list-fonts
+
+# Convert an image to ASCII art
+ascii-art image /path/to/image.jpg
+
+# Convert an image to ASCII art with ANSI colors and custom dimensions
+ascii-art image /path/to/image.jpg --color-mode ansi --width 120 --height 60
+
+# Convert an image to ASCII art with ANSI colors
+ascii-art image /path/to/image.jpg --color-mode ansi
+
+# Play a video as ASCII art in the terminal
+ascii-art play /path/to/video.mp4
+
+# Play a video as ASCII art in the terminal with ANSI colors
+ascii-art play /path/to/video.mp4 --color-mode ansi
+
+# Adjust brightness (default: 1.0)
+ascii-art play /path/to/video.mp4 --brightness 1.5
+
+# Convert a video to an ASCII art video file
+ascii-art video /path/to/video.mp4 /path/to/output.mp4
+
+# Convert a video to an ASCII art video file with ANSI colors
+ascii-art video /path/to/video.mp4 /path/to/output.mp4 --color-mode ansi
+```
+
+Here is a sample code for ANSI color codes:
+```python
+# ansi_color_demo.py
+# Prints common ANSI foreground and background color codes with labels
+
+def ansi(code, text):
+    return f"\033[{code}m{text}\033[0m"
+
+def demo_colors():
+    print("=== ANSI Foreground Colors ===")
+    for code in list(range(30, 38)) + list(range(90, 98)):
+        label = f"Code {code}"
+        print(ansi(code, f"{label:<10} → \033[{code}mSample Text\033[0m"))
+
+    print("\n=== ANSI Background Colors ===")
+    for code in list(range(40, 48)) + list(range(100, 108)):
+        label = f"Code {code}"
+        print(ansi(code, f"{label:<10} → ") + ansi(f"{code};30", "Sample Text"))
+
+    print("\n=== ANSI Text Styles ===")
+    styles = {
+        0: "Reset",
+        1: "Bold",
+        4: "Underline",
+        7: "Inverse",
+    }
+    for code, name in styles.items():
+        print(ansi(code, f"Code {code:<2} ({name}) → Sample Text"))
+
+if __name__ == "__main__":
+    demo_colors()
+```
+
+## Changelog
+
+### [Unreleased]
+
+- **Fixed**: `ascii-art image --color-mode ansi` now works correctly.
+
 ### Python API
 
 ```python
-from morchaos.core import duplicate, image, source, ebook, ollama_chat, system, prompt_manager
+from morchaos.core import duplicate, image, source, ebook, ollama_chat, system, prompt_manager, ascii_art
 from morchaos.core.ollama_chat import run_chat, health_check, list_models # Import core functions directly
 from pathlib import Path
 
@@ -212,6 +274,14 @@ source_duplicates = source.find_source_duplicates(Path("/path/to/code"))
 
 # Catalogize ebooks
 ebook.catalogize(Path("/path/to/ebooks"))
+
+# Generate ASCII art from text
+text_art = ascii_art.generate_text_art("Hello", font="slant")
+print(text_art)
+
+# Generate ASCII art from an image
+image_art = ascii_art.generate_image_art(Path("/path/to/image.jpg"))
+print(image_art)
 
 # Use ollama chat (example using the core functions directly)
 import asyncio
@@ -275,6 +345,7 @@ morchaos/
 │   ├── ollama_chat.py    # Ollama chat integration
 │   ├── prompt_manager.py # Prompt management functions
 │   ├── system.py         # System information collection
+│   ├── ascii_art.py      # ASCII art generation
 │   └── file_utils.py     # File utilities
 ├── cli/                  # Command-line interfaces
 │   ├── duplicate.py      # duplicate command
@@ -283,7 +354,8 @@ morchaos/
 │   ├── ebook_catalog.py  # ebook-catalog command
 │   ├── ollama_chat.py    # chatbot command
 │   ├── prompt_manager.py # prompt-manager command
-│   └── system_info.py    # system-info command
+│   ├── system_info.py    # system-info command
+│   └── ascii_art.py      # ascii-art command
 ├── logger/               # Logging configuration
 └── tests/                # Test suite
 ```

@@ -46,12 +46,13 @@ def build_parser() -> argparse.ArgumentParser:
         "-uf",
         "--user-file",
         dest="user_file",
-        help="File containing the user prompt or a nickname from prompt_file_map.json.",
+        help="File containing the user prompt or a nickname from prompt_file_map.json.",  # noqa: E128
     )
 
     # Optional debug flag
     parser.add_argument(
-        "-d", "--debug", action="store_true", help="Print stack traces on errors."
+        "-d", "--debug", action="store_true",
+        help="Print stack traces on errors."
     )
 
     # Interactive mode
@@ -62,7 +63,8 @@ def build_parser() -> argparse.ArgumentParser:
     )
 
     # Optional model selector
-    parser.add_argument("-m", "--model", default="gemma3:4b", help="Ollama model name.")
+    parser.add_argument("-m", "--model", default="gemma3:4b",
+                        help="Ollama model name.")
 
     # Optional URL and timeout
     parser.add_argument(
@@ -72,7 +74,8 @@ def build_parser() -> argparse.ArgumentParser:
         help="Base URL of the chat model API.",
     )
     parser.add_argument(
-        "--timeout", "-t", type=int, default=120, help="Request timeout in seconds."
+        "--timeout", "-t", type=int, default=120,
+        help="Request timeout in seconds."
     )
 
     # Optional list models and health check
@@ -103,6 +106,12 @@ def build_messages(system_prompt: str, user_prompt: str) -> list[dict[str, str]]
 
 def main():
     parser = build_parser()
+
+    # If no arguments are provided, print help and exit
+    if len(sys.argv) == 1:
+        parser.print_help(sys.stderr)
+        sys.exit(1)
+
     args = parser.parse_args()
 
     init_logging(level=20 if args.debug else 30)
@@ -131,7 +140,8 @@ def main():
         models = list_models(args.url, args.timeout)
         if models:
             print("Available models:")
-            max_name_len = max(len(model["name"]) for model in models) if models else 0
+            max_name_len = max(len(model["name"]) for model in models) \
+                if models else 0
             print(f"{'NAME':<{max_name_len}}  {'SIZE':>10}  {'MODIFIED':<20}")
             print(f"{'-' * max_name_len}  {'-' * 10}  {'-' * 20}")
             for model in models:
@@ -180,7 +190,8 @@ def main():
                     break
                 messages.append({"role": "user", "content": user_input})
                 full_response = asyncio.run(
-                    run_chat(messages, model=args.model, url=args.url, timeout=args.timeout)
+                    run_chat(messages, model=args.model, url=args.url,
+                             timeout=args.timeout)
                 )
                 if full_response:
                     messages.append({"role": "assistant", "content": full_response})
@@ -210,7 +221,8 @@ def main():
 
         try:
             asyncio.run(
-                run_chat(messages, model=args.model, url=args.url, timeout=args.timeout)
+                run_chat(messages, model=args.model, url=args.url,
+                         timeout=args.timeout)
             )
         except RuntimeError as e:
             if args.debug:

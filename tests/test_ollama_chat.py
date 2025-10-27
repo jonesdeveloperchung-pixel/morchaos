@@ -1,4 +1,5 @@
 import pytest
+import os
 from unittest.mock import AsyncMock
 
 from morchaos.cli import ollama_chat
@@ -24,9 +25,9 @@ def test_ollama_chat_inline_prompts(mock_run_chat_core, mocker):
         "sys.argv",
         [
             "ollama-chat",
-            "-S",
+            "-s",
             "You are a sarcastic Unix expert.",
-            "-U",
+            "-p",
             "Explain virtual memory.",
         ],
     )
@@ -50,8 +51,8 @@ def test_ollama_chat_file_based_system_prompt(tmp_path, mock_run_chat_core, mock
         [
             "ollama-chat",
             "--sf",
-            str(system_prompt_file),
-            "-U",
+            os.path.normpath(str(system_prompt_file)),
+            "-p",
             "What is a closure in Python?",
         ],
     )
@@ -69,7 +70,7 @@ def test_ollama_chat_default_system_prompt(mock_run_chat_core, mocker):
         "sys.argv",
         [
             "ollama-chat",
-            "-U",
+            "-p",
             "Show me the Linux kernel source.",
         ],
     )
@@ -94,13 +95,13 @@ def test_health_check(mock_health_check_core, mocker, capsys):
     captured = capsys.readouterr()
     assert "✓ Endpoint http://localhost:11434 is healthy" in captured.out
     mock_health_check_core.assert_called_once_with(
-        "http://localhost:11434", 30
+        "http://localhost:11434", 120
     )  # Default timeout
 
 
 def test_list_models(mock_list_models_core, mocker, capsys):
-    mock_list_models_core.return_value = ["model1", "model2"]
-    mocker.patch("sys.argv", ["ollama-chat", "--list-models"])
+    mock_list_models_core.return_value = [{"name": "model1", "size": 123, "modified_at": "2023-01-01"}, {"name": "model2", "size": 456, "modified_at": "2023-01-02"}]
+    mocker.patch("sys.argv", ["ollama-chat", "--list"])
     with pytest.raises(SystemExit) as excinfo:
         ollama_chat.main()
     assert excinfo.value.code == 0
@@ -109,5 +110,5 @@ def test_list_models(mock_list_models_core, mocker, capsys):
     assert "model1" in captured.out
     assert "model2" in captured.out
     mock_list_models_core.assert_called_once_with(
-        "http://localhost:11434", 30
+        "http://localhost:11434", 120
     )  # Default timeout

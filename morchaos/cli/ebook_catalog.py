@@ -6,7 +6,9 @@ from pathlib import Path
 try:
     import click
 except ImportError as e:
-    raise ImportError("Required package not installed. Run: pip install click") from e
+    raise ImportError(
+        "Required package not installed. Run: pip install click"
+    ) from e
 
 from ..logger import init_logging, logger
 from ..core.ebook import catalogize, extract_ebook_metadata
@@ -17,7 +19,8 @@ from ..core.file_utils import safe_path
 @click.option(
     "--directory",
     "-d",
-    type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=Path),
+    type=click.Path(exists=True, file_okay=False, dir_okay=True,
+                    path_type=Path),
     required=True,
     help="Directory containing ebooks to catalogize",
 )
@@ -33,7 +36,8 @@ from ..core.file_utils import safe_path
     is_flag=True,
     help="Preview metadata extraction for files in directory",
 )
-@click.option("--verbose", "-v", is_flag=True, help="Enable verbose logging")
+@click.option("--verbose", "-v", is_flag=True,
+              help="Enable verbose logging")
 def main(directory: Path, dry_run: bool, preview: bool, verbose: bool) -> None:
     """Organize ebooks into author-based directory structure."""
 

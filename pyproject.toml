@@ -24,6 +24,10 @@ ebooklib = "^0.18"
 beautifulsoup4 = "^4.12.0"
 ollama = "*"
 httpx = "*"
+pyfiglet = "*"
+opencv-python = "*"
+numpy = "*"
+pydub = "*"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -50,6 +54,7 @@ youtube = "morchaos.cli.youtube:main"
 email-bot = "morchaos.cli.email_bot:main"
 geocode = "morchaos.cli.geocode:main"
 prompt-manager = "morchaos.cli.prompt_manager:main"
+ascii-art = "morchaos.cli.ascii_art:cli"
 
 [build-system]
 requires = ["poetry-core"]

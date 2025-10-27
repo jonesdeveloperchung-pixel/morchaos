@@ -26,7 +26,8 @@ def main():
     reverse_parser.add_argument("longitude", type=float, help="Longitude")
 
     # Location info
-    info_parser = subparsers.add_parser("info", help="Get detailed location info")
+    info_parser = subparsers.add_parser("info",
+                                        help="Get detailed location info")
     info_parser.add_argument("address", help="Address to get info for")
 
     parser.add_argument(

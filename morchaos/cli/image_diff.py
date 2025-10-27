@@ -6,7 +6,9 @@ from pathlib import Path
 try:
     import click
 except ImportError as e:
-    raise ImportError("Required package not installed. Run: pip install click") from e
+    raise ImportError(
+        "Required package not installed. Run: pip install click"
+    ) from e
 
 from ..logger import init_logging, logger
 from ..core.image import find_image_duplicates
@@ -17,7 +19,8 @@ from ..core.file_utils import safe_path
 @click.option(
     "--directory",
     "-d",
-    type=click.Path(exists=True, file_okay=False, dir_okay=True, path_type=Path),
+    type=click.Path(exists=True, file_okay=False, dir_okay=True,
+                    path_type=Path),
     required=True,
     help="Directory to scan for image duplicates",
 )
@@ -49,7 +52,8 @@ def main(
         root_path = safe_path(directory)
 
         if not 0 <= threshold <= 64:
-            click.echo("Error: threshold must be between 0 and 64", err=True)
+            click.echo("Error: threshold must be between 0 and 64",
+                       err=True)
             sys.exit(2)
 
         # Find image duplicates

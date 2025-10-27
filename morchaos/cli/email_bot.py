@@ -10,9 +10,11 @@ from ..core.config import load_config
 def main():
     """Main CLI entry point for email bot."""
     parser = argparse.ArgumentParser(description="Run email bot")
-    parser.add_argument("--config", required=True, help="Configuration file path")
+    parser.add_argument("--config", required=True,
+                        help="Configuration file path")
     parser.add_argument(
-        "--type", choices=["generic", "torrent"], default="generic", help="Bot type"
+        "--type", choices=["generic", "torrent"], default="generic",
+        help="Bot type"
     )
     parser.add_argument(
         "--verbose", "-v", action="store_true", help="Enable verbose logging"

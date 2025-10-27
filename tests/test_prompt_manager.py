@@ -101,7 +101,7 @@ def test_convert_unsupported_format_raises_error(tmp_path):
     input_file = tmp_path / "input.xml"
     input_file.write_text("<prompt>XML content</prompt>")
     output_file = tmp_path / "output.json"
-    with pytest.raises(ValueError, match="Unsupported input file format: .xml"):
+    with pytest.raises(ValueError, match="Unsupported format: .xml. Only .txt and .json are supported."):
         prompt_manager.convert_prompt_format(input_file, output_file)
 
 
